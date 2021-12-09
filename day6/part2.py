@@ -23,7 +23,7 @@ for fish in fish_list:
 
 print(f"Inicial state: {school}")
 
-for d in range(1000000):
+for d in range(256):
     new_school = {
     0: 0,
     1: 0,
