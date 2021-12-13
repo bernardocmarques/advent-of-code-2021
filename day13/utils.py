@@ -15,15 +15,26 @@ def fold(g, f):
 
 
 def _fold_y(g, y):
-
-    for x in range(len(g[y])):
-        g[y][x] = "-"
+    n = 0
 
     for j in range(len(g) - 1, y, -1):
         for i in range(len(g[y])):
-            print((i, j))
-    print_grid(g)
+            if g[j][i] == '#':
+                g[n][i] = '#'
+        del g[j]
+        n += 1
+    del g[y]
 
 
 def _fold_x(g, x):
-    pass
+    for j in range(len(g)):
+        n = 0
+        for i in range(len(g[j]) - 1, x - 1, -1):
+            if i != x:
+                if g[j][i] == '#':
+                    g[j][n] = '#'
+            del g[j][i]
+            n += 1
+
+
+

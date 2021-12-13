@@ -43,13 +43,7 @@ for y in range(max_y + 1):
             line.append(".")
     grid.append(line)
 
+for f in folds:
+    fold(grid, f)
 
-fold(grid, folds[0])
-
-count = 0
-for line in grid:
-    for e in line:
-        if e == '#':
-            count += 1
-
-print(count)
+print_grid(grid)
