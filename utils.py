@@ -4,3 +4,5 @@ def bin_to_dec(b):
         res += int(b[::-1][i]) * (2 ** i)
 
     return res
+
+

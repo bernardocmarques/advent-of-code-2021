@@ -1,7 +1,5 @@
-def print_grid(h):
+def print_grid(g):
     print()
-    for line in h:
+    for line in g:
         print("".join([str(e) for e in line]))
     print()
-
-
