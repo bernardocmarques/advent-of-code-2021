@@ -9,13 +9,16 @@ polymer = lines[0]
 start = datetime.datetime.now()
 
 rules = []
+
+
 for line in lines[2:]:
     rules.append(tuple(line.split(" -> ")))
 
-for step in range(20):
-    polymer = apply_rules_p1(polymer, rules)
+rules = {e[0]: e[1] for e in rules}
+for step in range(16):
+    polymer = apply_rules_p1_new(polymer, rules)
 
-    print(f"After step {step+1}: {polymer}")
+    print(f"After step {step+1}:")
 
 char_count = {}
 for char in polymer:

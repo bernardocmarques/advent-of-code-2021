@@ -1,5 +1,5 @@
 from utils import *
-import re,datetime
+import re, datetime
 
 with open("input.txt", "r") as input_file:
     lines = [e.replace("\n", "") for e in input_file.readlines()]
@@ -19,35 +19,24 @@ print(rules)
 
 step = 1
 steps_to_add = 1
-while step < 5:
+while step < 7:
+    next_rules = {}
     for k, v in new_rules.items():
         n = apply_rules(v, rules)
         new_rules[k] = n
 
-    step += steps_to_add
+    # rules = {k: v for k, v in new_rules.items()}
+
     print(f"After step {step}:")
-
-step = 0
-while step < 3:
-    for k, v in rules.items():
-        n = apply_rules(v, new_rules)
-        rules[k] = n
-
-    step += steps_to_add
-    print(f"After step {step}:")
-
+    step += 1
 
 for k, v in new_rules.items():
     print(f"{k}: {v}")
 print()
-for k, v in rules.items():
-    print(f"{k}: {v}")
+# for k, v in rules.items():
+#     print(f"{k}: {v}")
 
-
-for step in range(2):
-    polymer = apply_rules(polymer, rules)
-    print(f"After step {step+1}:")
-
+polymer = apply_rules(polymer, new_rules)
 
 char_count = {}
 for char in polymer:

@@ -37,3 +37,17 @@ def apply_rules_p1(polymer, rules):
     for item, index in to_add:
         polymer = polymer[:index] + item + polymer[index:]
     return polymer
+
+
+def apply_rules_p1_new(polymer, rules):
+    i = 0
+    while i < len(polymer):
+        pair = polymer[i:i+2]
+        if len(pair) != 2:
+            break
+        # print(pair)
+        n = rules[pair]
+        polymer = polymer[:i+1] + n + polymer[i+1:]
+        i += len(n)+1
+
+    return polymer
