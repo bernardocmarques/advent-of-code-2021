@@ -1,4 +1,4 @@
-from utils import bin_to_dec
+from utils_main import bin_to_dec
 
 ogr = ""
 csr = ""
