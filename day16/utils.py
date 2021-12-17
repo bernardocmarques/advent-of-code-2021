@@ -5,7 +5,6 @@ def process_packet_operation(packet_to_process):
     bin_code = packet_to_process["bin_code"]
     length_type = packet_to_process["length_type"]
 
-
     processed_packet = {
         "version": packet_to_process["version"],
         "type_ID": packet_to_process["type_ID"],
@@ -14,9 +13,6 @@ def process_packet_operation(packet_to_process):
     if length_type == 0:
         length = bin_to_dec(bin_code[0:15])
         bin_code = bin_code[15:]
-
-
-
 
         while length:
             old_len = len(bin_code)
@@ -89,3 +85,71 @@ def sum_versions(packet):
             res += sum_versions(sub_packet)
 
     return res
+
+
+def make_operation(packet):
+    type_id = packet['type_ID']
+    if type_id == 4:
+        return packet['value']
+    elif type_id == 0:
+        return make_sum(packet)
+    elif type_id == 1:
+        return make_product(packet)
+    elif type_id == 2:
+        return make_min(packet)
+    elif type_id == 3:
+        return make_max(packet)
+    elif type_id == 5:
+        return make_greater_than(packet)
+    elif type_id == 6:
+        return make_less_than(packet)
+    elif type_id == 7:
+        return make_equal_to(packet)
+
+
+def make_sum(packet):
+    res = 0
+
+    for sub_packet in packet['packets']:
+        res += make_operation(sub_packet)
+
+    return res
+
+
+def make_product(packet):
+    res = 1
+
+    for sub_packet in packet['packets']:
+        res *= make_operation(sub_packet)
+
+    return res
+
+
+def make_min(packet):
+    res = float('inf')
+
+    for sub_packet in packet['packets']:
+        res = min(res, make_operation(sub_packet))
+
+    return res
+
+
+def make_max(packet):
+    res = -1
+
+    for sub_packet in packet['packets']:
+        res = max(res, make_operation(sub_packet))
+
+    return res
+
+
+def make_greater_than(packet):
+    return int(make_operation(packet['packets'][0]) > make_operation(packet['packets'][1]))
+
+
+def make_less_than(packet):
+    return int(make_operation(packet['packets'][0]) < make_operation(packet['packets'][1]))
+
+
+def make_equal_to(packet):
+    return int(make_operation(packet['packets'][0]) == make_operation(packet['packets'][1]))
