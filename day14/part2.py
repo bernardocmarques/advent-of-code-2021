@@ -1,5 +1,8 @@
 from utils import *
-import re, datetime
+import datetime
+
+# usar uma ideia de tree e links
+
 
 with open("input.txt", "r") as input_file:
     lines = [e.replace("\n", "") for e in input_file.readlines()]
@@ -7,28 +10,30 @@ start = datetime.datetime.now()
 
 polymer = lines[0]
 
+polymer_pairs = []
+
+for i in range(len(polymer)-1):
+    polymer_pairs.append(polymer[i:i+2])
+
 rules = []
 for line in lines[2:]:
     rules.append(tuple(line.split(" -> ")))
 
-# new_rules = {e[0]: e[0] for e in rules}
 new_rules = {e[0]: e[0][0] + e[1] + e[0][1] for e in rules}
-# rules = {e[0]: e[1] for e in rules}
 rules = {e[0]: e[0][0] + e[1] + e[0][1] for e in rules}
 print(rules)
 
 step = 1
 steps_to_add = 1
-while step < 7:
+while step < 16:
     next_rules = {}
-    for k, v in new_rules.items():
-        n = apply_rules(v, rules)
-        new_rules[k] = n
-
-    # rules = {k: v for k, v in new_rules.items()}
+    for pair in polymer_pairs:
+        v = new_rules[pair]
+        new_rules[pair] = apply_rules(v, rules)
+    rules = {k: v for k, v in new_rules.items()}
 
     print(f"After step {step}:")
-    step += 1
+    step += step
 
 for k, v in new_rules.items():
     print(f"{k}: {v}")
